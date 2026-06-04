@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/ktotopawel/dao/JobDao/claimJob.sql" value="1e1ba31c-c9e5-40f4-a132-7d19716b8c32" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/ktotopawel/dao/JobDao/createTable.sql" value="1e1ba31c-c9e5-40f4-a132-7d19716b8c32" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/ktotopawel/dao/JobDao/dropTable.sql" value="1e1ba31c-c9e5-40f4-a132-7d19716b8c32" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/com/ktotopawel/dao/JobDao/unclaimJob.sql" value="1e1ba31c-c9e5-40f4-a132-7d19716b8c32" />
+  </component>
+</project>

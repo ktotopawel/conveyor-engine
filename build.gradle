@@ -19,6 +19,8 @@ dependencies {
     implementation("org.jdbi:jdbi3-core:3.53.0")
     implementation("org.jdbi:jdbi3-sqlobject:3.53.0")
     implementation("org.jdbi:jdbi3-postgres:3.53.0")
+    implementation("org.projectlombok:lombok:1.18.46")
+    implementation("com.zaxxer:HikariCP:7.0.2")
 }
 
 test {
