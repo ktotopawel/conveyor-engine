@@ -1,6 +1,7 @@
 package com.ktotopawel.dao;
 
 import com.ktotopawel.model.Job;
+import org.jdbi.v3.json.Json;
 import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.locator.UseClasspathSqlLocator;
@@ -17,7 +18,7 @@ public interface JobDao {
     void createTable();
 
     @SqlUpdate("insert into jobs (name, job_data) values (:name, :jobData)")
-    void insertJob(@Bind("name") String name, @Bind("jobData") Map<String, Object> jobData);
+    void insertJob(@Bind("name") String name, @Bind("jobData") @Json Map<String, Object> jobData);
 
     @SqlQuery
     @RegisterConstructorMapper(Job.class)

@@ -8,6 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/conveyor-api" />
+            <option value="$PROJECT_DIR$/conveyor-core" />
+            <option value="$PROJECT_DIR$/conveyor-worker" />
           </set>
         </option>
         <option name="myGradleHome" value="" />

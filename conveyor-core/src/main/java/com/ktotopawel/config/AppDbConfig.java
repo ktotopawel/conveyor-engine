@@ -3,10 +3,15 @@ package com.ktotopawel.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.jackson3.Jackson3Config;
+import org.jdbi.v3.jackson3.Jackson3Plugin;
+import org.jdbi.v3.postgres.PostgresPlugin;
+import org.jdbi.v3.sqlobject.SqlObjectPlugin;
+import tools.jackson.databind.ObjectMapper;
 
 public class AppDbConfig {
 
-    public static Jdbi createJdbi() {
+    public static Jdbi createJdbi(ObjectMapper mapper) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:postgresql://localhost:5432/your_database");
         config.setUsername("admin");
@@ -19,6 +24,14 @@ public class AppDbConfig {
 
         HikariDataSource dataSource = new HikariDataSource(config);
 
-        return Jdbi.create(dataSource);
+        Jdbi jdbi = Jdbi.create(dataSource);
+
+        jdbi
+                .installPlugin(new SqlObjectPlugin())
+                .installPlugin(new PostgresPlugin())
+                .installPlugin(new Jackson3Plugin())
+                .getConfig(Jackson3Config.class).setMapper(mapper);
+
+        return jdbi;
     }
 }

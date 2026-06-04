@@ -1,1 +1,5 @@
-rootProject.name = 'job-queue'
+rootProject.name = 'conveyor-engine'
+
+include 'conveyor-core'
+include 'conveyor-api'
+include 'conveyor-worker'
