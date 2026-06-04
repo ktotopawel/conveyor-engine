@@ -1,6 +1,6 @@
 WITH next_job AS (SELECT id
                   FROM jobs
-                  WHERE state = 'available'
+                  WHERE state = 'pending'
 
                      OR (state = 'claimed' AND lease_expires_at < now())
 

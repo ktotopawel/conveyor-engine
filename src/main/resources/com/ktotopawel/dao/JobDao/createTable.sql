@@ -16,5 +16,5 @@ CREATE TABLE IF NOT EXISTS jobs
 CREATE INDEX idx_jobs_processing_queue
     ON jobs (created_at ASC)
     INCLUDE (lease_expires_at)
-    WHERE state IN ('available', 'claimed');
+    WHERE state IN ('pending', 'claimed');
 
