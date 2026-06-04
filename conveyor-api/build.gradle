@@ -17,6 +17,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.32")
     implementation("org.slf4j:slf4j-api:2.0.18")
     implementation("org.projectlombok:lombok:1.18.46")
+    implementation project(':conveyor-core')
 }
 
 test {
