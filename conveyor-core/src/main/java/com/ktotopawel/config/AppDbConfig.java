@@ -13,7 +13,7 @@ public class AppDbConfig {
 
     public static Jdbi createJdbi(ObjectMapper mapper) {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5432/your_database");
+        config.setJdbcUrl("jdbc:postgresql://localhost:5432/jobqueue_db");
         config.setUsername("admin");
         config.setPassword("Passwordzaq123");
 

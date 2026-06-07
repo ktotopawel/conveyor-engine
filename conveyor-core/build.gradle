@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
 group = 'com.ktotopawel'
@@ -15,14 +15,15 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation("ch.qos.logback:logback-classic:1.5.32")
     implementation("org.slf4j:slf4j-api:2.0.18")
-    implementation("org.jdbi:jdbi3-core:3.53.0")
-    implementation("org.jdbi:jdbi3-sqlobject:3.53.0")
-    implementation("org.jdbi:jdbi3-postgres:3.53.0")
-    implementation("org.projectlombok:lombok:1.18.46")
-    implementation("com.zaxxer:HikariCP:7.0.2")
-    implementation("tools.jackson.core:jackson-core:3.1.1")
-    implementation("org.jdbi:jdbi3-json:3.53.0")
-    implementation("org.jdbi:jdbi3-jackson3:3.53.0")
+    api("org.jdbi:jdbi3-core:3.53.0")
+    api("org.jdbi:jdbi3-sqlobject:3.53.0")
+    api("org.jdbi:jdbi3-postgres:3.53.0")
+    compileOnly("org.projectlombok:lombok:1.18.46")
+    annotationProcessor("org.projectlombok:lombok:1.18.46")
+    api("com.zaxxer:HikariCP:7.0.2")
+    api("tools.jackson.core:jackson-core:3.1.1")
+    api("org.jdbi:jdbi3-json:3.53.0")
+    api("org.jdbi:jdbi3-jackson3:3.53.0")
 }
 
 test {

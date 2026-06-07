@@ -13,8 +13,22 @@ CREATE TABLE IF NOT EXISTS jobs
     last_error       TEXT                                    -- stored in the db AS STATE (enables querying DQ for specific fail reason)
 );
 
-CREATE INDEX idx_jobs_processing_queue
+CREATE INDEX IF NOT EXISTS idx_jobs_processing_queue
     ON jobs (created_at ASC)
     INCLUDE (lease_expires_at)
     WHERE state IN ('pending', 'claimed');
 
+CREATE OR REPLACE FUNCTION notify_job_created()
+    RETURNS TRIGGER AS
+$$
+BEGIN
+    PERFORM pg_notify('job_notifications', '');
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER job_created_trigger
+    AFTER INSERT
+    ON jobs
+    FOR EACH STATEMENT
+EXECUTE FUNCTION notify_job_created();
