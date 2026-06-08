@@ -3,6 +3,7 @@ package com.ktotopawel;
 import com.ktotopawel.config.AppDbConfig;
 import com.ktotopawel.config.AppObjectMapperConfig;
 import com.ktotopawel.controller.JobController;
+import com.ktotopawel.repository.JobRepository;
 import com.ktotopawel.route.JobRoutes;
 import com.ktotopawel.service.JobService;
 import io.javalin.Javalin;
@@ -26,7 +27,8 @@ public class Main {
 
         logger.info("Starting HTTP server...");
 
-        JobService jobService = new JobService();
+        JobRepository jobRepository = new JobRepository(jdbi);
+        JobService jobService = new JobService(jobRepository);
         JobController jobController = new JobController(jobService, mapper);
         JobRoutes jobRoutes = new JobRoutes(jobController);
 

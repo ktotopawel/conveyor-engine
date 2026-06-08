@@ -1,0 +1,26 @@
+info:
+  name: submitJob
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}jobs"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "test",
+        "jobData": {
+          "testString": "testData",
+          "testNumber": 1,
+          "testBoolean": true
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

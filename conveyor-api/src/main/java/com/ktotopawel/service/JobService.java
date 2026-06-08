@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JobService {
 
-    private JobRepository repository;
+    private final JobRepository repository;
 
     public void submitJob(SubmitJobDto dto) {
         repository.save(dto);
