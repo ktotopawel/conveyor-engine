@@ -34,6 +34,13 @@ public class Main {
 
         Javalin.create(
                         cfg -> {
+                            cfg.requestLogger.http((ctx, ms) -> {
+                                logger.info("{} {} - Status: {} (took {}ms)",
+                                        ctx.method(),
+                                        ctx.path(),
+                                        ctx.status(),
+                                        ms);
+                            });
                             cfg.routes.apiBuilder(jobRoutes);
                         }
                 )

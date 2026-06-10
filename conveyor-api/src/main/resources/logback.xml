@@ -1,0 +1,5 @@
+<configuration>
+    <include resource="logback-common.xml"/>
+
+    <logger name="io.javalin" level="DEBUG"/>
+</configuration>
