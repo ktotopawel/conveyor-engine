@@ -1,6 +1,6 @@
 package com.ktotopawel.service;
 
-import com.ktotopawel.dto.SubmitJobDto;
+import com.ktotopawel.model.Job;
 import com.ktotopawel.repository.JobRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -11,7 +11,7 @@ public class JobService {
 
     private final JobRepository repository;
 
-    public void submitJob(UUID id, SubmitJobDto dto) {
-        repository.save(id, dto);
+    public void submitJob(Job job) {
+        repository.save(job);
     }
 }

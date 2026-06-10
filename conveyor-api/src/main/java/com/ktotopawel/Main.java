@@ -3,6 +3,7 @@ package com.ktotopawel;
 import com.ktotopawel.config.AppDbConfig;
 import com.ktotopawel.config.AppObjectMapperConfig;
 import com.ktotopawel.controller.JobController;
+import com.ktotopawel.dao.JobDao;
 import com.ktotopawel.repository.JobRepository;
 import com.ktotopawel.route.JobRoutes;
 import com.ktotopawel.service.JobService;
@@ -24,6 +25,13 @@ public class Main {
         logger.info("Initializing database connection...");
         Jdbi jdbi = AppDbConfig.createJdbi(mapper);
         logger.info("Database connection initialized successfully.");
+
+        logger.info("Creating database schema...");
+        jdbi.useHandle(handle -> {
+            JobDao dao = handle.attach(JobDao.class);
+            dao.createTable();
+        });
+        logger.info("Database schema created successfully.");
 
         logger.info("Starting HTTP server...");
 

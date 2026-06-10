@@ -27,6 +27,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS job_created_trigger ON jobs;
+
 CREATE TRIGGER job_created_trigger
     AFTER INSERT
     ON jobs
