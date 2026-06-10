@@ -1,4 +1,5 @@
 <configuration>
-    <include resource="logback-common.xml"/>
+    <property name="EXTRA_INFO" value="[JobId: %X{jobId:-no-job}] [Worker: %X{workerId:-no-worker}]"/>
 
+    <include resource="logback-common.xml"/>
 </configuration>

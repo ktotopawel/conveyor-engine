@@ -1,7 +1,9 @@
 <included>
+    <property name="EXTRA_INFO" value=""/>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] ${EXTRA_INFO} %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 

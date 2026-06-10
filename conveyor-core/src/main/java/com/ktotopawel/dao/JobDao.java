@@ -17,8 +17,8 @@ public interface JobDao {
     @UseClasspathSqlLocator
     void createTable();
 
-    @SqlUpdate("insert into jobs (name, job_data) values (:name, :jobData)")
-    void insertJob(@Bind("name") String name, @Bind("jobData") @Json Map<String, Object> jobData);
+    @SqlUpdate("insert into jobs (id, name, job_data) values (:id, :name, :jobData)")
+    void insertJob(@Bind("id") UUID id, @Bind("name") String name, @Bind("jobData") @Json Map<String, Object> jobData);
 
     @SqlQuery
     @UseClasspathSqlLocator

@@ -16,7 +16,7 @@ public class JobController {
 
     public void submitJob(Context ctx) {
         SubmitJobDto dto = mapper.readValue(ctx.body(), SubmitJobDto.class);
-        service.submitJob(dto);
+        service.submitJob(ctx.attribute("jobId"), dto);
         ctx.status(HttpStatus.ACCEPTED).json("Job submitted successfully");
     }
 }

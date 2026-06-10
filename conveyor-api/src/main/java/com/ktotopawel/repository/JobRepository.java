@@ -6,15 +6,17 @@ import com.ktotopawel.model.Job;
 import lombok.RequiredArgsConstructor;
 import org.jdbi.v3.core.Jdbi;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 public class JobRepository {
 
     private final Jdbi jdbi;
 
-    public void save(SubmitJobDto job) {
+    public void save(UUID id, SubmitJobDto job) {
         jdbi.useTransaction(handle -> {
             JobDao dao = handle.attach(JobDao.class);
-            dao.insertJob(job.name(), job.jobData());
+            dao.insertJob(id, job.name(), job.jobData());
         });
     }
 }
