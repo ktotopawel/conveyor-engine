@@ -1,7 +1,7 @@
 package com.ktotopawel;
 
-import com.ktotopawel.config.AppDbConfig;
 import com.ktotopawel.config.AppObjectMapperConfig;
+import com.ktotopawel.config.db.AppDbConfig;
 import com.ktotopawel.controller.JobController;
 import com.ktotopawel.dao.JobDao;
 import com.ktotopawel.repository.JobRepository;
@@ -23,7 +23,13 @@ public class Main {
         ObjectMapper mapper = AppObjectMapperConfig.createObjectMapper();
 
         logger.info("Initializing database connection...");
-        Jdbi jdbi = AppDbConfig.createJdbi(mapper);
+
+        Jdbi jdbi = AppDbConfig.configure()
+                .maxPoolSize(10)
+                .minIdle(2)
+                .mapper(mapper)
+                .create();
+
         logger.info("Database connection initialized successfully.");
 
         logger.info("Creating database schema...");
