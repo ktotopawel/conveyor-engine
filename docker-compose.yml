@@ -1,5 +1,7 @@
+version: '3.8'
+
 services:
-  db:
+  postgres:
     image: postgres:16-alpine
     container_name: my_project_db
     restart: always
@@ -11,6 +13,33 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./jobs_schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://postgres:5432/jobqueue_db
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=Passwordzaq123
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    depends_on:
+      - postgres
+      - api
+    environment:
+      - DATABASE_URL=jdbc:postgresql://postgres:5432/jobqueue_db
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=Passwordzaq123
+      - API_HOST=http://api:8000
 
 volumes:
   postgres_data:
