@@ -17,8 +17,7 @@ public class JobRepository {
         jdbi.useTransaction(handle -> {
             JobDao dao = handle.attach(JobDao.class);
 
-            logger.debug("Inserting job into database: id={}, name={}", job.id(), job.name());
-            logger.debug("Job data: {}", job.jobData());
+            logger.debug("Inserting job: id={}, name={}, data={}", job.id(), job.name(), job.jobData());
 
             dao.insertJob(job.id(), job.name(), job.jobData());
         });

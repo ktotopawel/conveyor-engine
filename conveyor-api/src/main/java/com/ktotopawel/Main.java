@@ -56,8 +56,10 @@ public class Main {
                                         ms);
                             });
                             cfg.routes.apiBuilder(jobRoutes);
+                        cfg.routes.get("/", ctx -> ctx.status(200).result("API is up and running"));
                         }
                 )
                 .start(8000);
+
     }
 }
