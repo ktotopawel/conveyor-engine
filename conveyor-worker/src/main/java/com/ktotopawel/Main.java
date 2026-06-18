@@ -1,16 +1,24 @@
 package com.ktotopawel;
 
+import com.ktotopawel.config.AppObjectMapperConfig;
 import com.ktotopawel.config.BackoffConfig;
 import com.ktotopawel.config.WorkerConfig;
 import com.ktotopawel.config.db.AppDbConfig;
+import com.ktotopawel.dispatcher.JobDispatcher;
 import com.ktotopawel.model.Job;
+import com.ktotopawel.processor.MdcJobProcessorDecorator;
+import com.ktotopawel.processor.TestProcessor;
 import com.ktotopawel.signaler.Signaler;
-import com.ktotopawel.worker.JobProcessor;
+import com.ktotopawel.processor.JobProcessor;
 import com.ktotopawel.worker.Worker;
 import com.zaxxer.hikari.HikariDataSource;
 import org.jdbi.v3.core.Jdbi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tools.jackson.databind.ObjectMapper;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     static void main(String[] args) {
@@ -19,7 +27,13 @@ public class Main {
         mainLogger.info("Starting Worker App");
         mainLogger.info("Creating db connections...");
 
-        Jdbi jdbi = AppDbConfig.configure().maxPoolSize(10).minIdle(2).create();
+        ObjectMapper mapper = AppObjectMapperConfig.createObjectMapper();
+
+        Jdbi jdbi = AppDbConfig.configure()
+                .mapper(mapper)
+                .maxPoolSize(10)
+                .minIdle(2)
+                .create();
 
         mainLogger.info("Created jdbi connection.");
 
@@ -35,26 +49,24 @@ public class Main {
                 .backoffConfig(new BackoffConfig())
                 .build();
 
-        JobProcessor testProcessor = new JobProcessor() {
+        JobDispatcher dispatcher = new JobDispatcher();
+        dispatcher.registerJobProcessor("test", new TestProcessor());
 
-            private final Logger logger = LoggerFactory.getLogger("TestProcessor");
-
-            @Override
-            public void process(Job job) throws Exception {
-                logger.info("Processing job: {}, with ID: {}", job.name(), job.id());
-            }
-        };
-
-        Worker mainWorker = new Worker(jdbi, config, testProcessor);
+        Worker mainWorker = new Worker(jdbi, config, dispatcher);
 
         signaler.subscribe(mainWorker);
 
-        mainLogger.info("Starting signaler...");
+        ExecutorService appExecutor = Executors.newFixedThreadPool(2);
 
-        signaler.run();
+        mainLogger.info("Starting signaler...");
+        appExecutor.execute(signaler);
 
         mainLogger.info("Starting worker(s)...");
+        appExecutor.execute(mainWorker);
 
-        mainWorker.run();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            mainLogger.info("Shutting down application...");
+            appExecutor.shutdown();
+        }));
     }
 }

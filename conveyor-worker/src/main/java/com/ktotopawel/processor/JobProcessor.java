@@ -1,8 +1,8 @@
-package com.ktotopawel.worker;
+package com.ktotopawel.processor;
 
 import com.ktotopawel.model.Job;
 
 @FunctionalInterface
 public interface JobProcessor {
-    abstract void process(Job job) throws Exception;
+    abstract void process(Job job);
 }

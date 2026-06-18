@@ -23,6 +23,9 @@ public class JobRoutes implements EndpointGroup {
                 ctx.attribute("jobId", generatedJobId);
             });
             post(controller::submitJob);
+            after(ctx -> {
+                MDC.clear();
+            });
         });
     }
 }
